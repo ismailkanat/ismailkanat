@@ -1,10 +1,101 @@
-(function($){"use strict";function portfolio_init(){var portfolio_grid=$('#portfolio_grid'),portfolio_filter=$('#portfolio_filters');if(portfolio_grid){portfolio_grid.shuffle({speed:450,itemSelector:'figure'});$('.site-main-menu').on("click","a",function(e){portfolio_grid.shuffle('update');});portfolio_filter.on("click",".filter",function(e){portfolio_grid.shuffle('update');e.preventDefault();$('#portfolio_filters .filter').parent().removeClass('active');$(this).parent().addClass('active');portfolio_grid.shuffle('shuffle',$(this).attr('data-group'));});}}
-$(function(){$('#contact-form').validator();$('#contact-form').on('submit',function(e){if(!e.isDefaultPrevented()){var url="contact_form/contact_form.php";$.ajax({type:"POST",url:url,data:$(this).serialize(),success:function(data)
-{var messageAlert='alert-'+data.type;var messageText=data.message;var alertBox='<div class="alert '+messageAlert+' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+messageText+'</div>';if(messageAlert&&messageText){$('#contact-form').find('.messages').html(alertBox);if(messageAlert=="alert-success"){$('#contact-form')[0].reset();}}}});return false;}});});$.fn.extend({rotaterator:function(options){var defaults={fadeSpeed:500,pauseSpeed:100,child:null};var options=$.extend(defaults,options);return this.each(function(){var o=options;var obj=$(this);var items=$(obj.children(),obj);items.each(function(){$(this).hide();});if(!o.child){var next=$(obj).children(':first');}else{var next=o.child;}
-$(next).fadeIn(o.fadeSpeed,function(){$(next).delay(o.pauseSpeed).fadeOut(o.fadeSpeed,function(){var next=$(this).next();if(next.length===0){next=$(obj).children(':first');}
-$(obj).rotaterator({child:next,fadeSpeed:o.fadeSpeed,pauseSpeed:o.pauseSpeed});});});});}});function mobileMenuHide(){var windowWidth=$(window).width();if(windowWidth<1024){$('#site_header').addClass('mobile-menu-hide');}}
-$(window).on('load',function(){$(".preloader").fadeOut("slow");});$(document).ready(function(){var $portfolio_container=$("#portfolio_grid");$portfolio_container.imagesLoaded(function(){setTimeout(function(){portfolio_init(this);},500);});$(' #portfolio_grid > figure > a ').each(function(){$(this).hoverdir();});$('.menu-toggle').click(function(){$('#site_header').toggleClass('mobile-menu-hide');});var $testimonials=$(".testimonials.owl-carousel").owlCarousel({nav:true,items:1,loop:true,navText:false,margin:10,});$('.site-main-menu').on("click","a",function(e){$testimonials.trigger('refresh.owl.carousel');});$('#rotate').rotaterator({fadeSpeed:800,pauseSpeed:1900});setTimeout(function(){var $container=$(".blog-masonry");$container.masonry();},500);$('.site-main-menu').on("click","a",function(e){var $container=$(".blog-masonry");$container.masonry();});$('.lightbox').magnificPopup({type:'image',removalDelay:300,mainClass:'mfp-fade',image:{titleSrc:'title'},iframe:{markup:'<div class="mfp-iframe-scaler">'+
-'<div class="mfp-close"></div>'+
-'<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe>'+
-'<div class="mfp-title mfp-bottom-iframe-title"></div>'+
-'</div>',patterns:{youtube:{index:'youtube.com/',id:'v=',src:'//www.youtube.com/embed/%id%?autoplay=1'},vimeo:{index:'vimeo.com/',id:'/',src:'//player.vimeo.com/video/%id%?autoplay=1'},gmaps:{index:'//maps.google.',src:'%id%&output=embed'}},srcAction:'iframe_src',},callbacks:{markupParse:function(template,values,item){values.title=item.el.attr('title');}},});});$(window).on('resize',function(){mobileMenuHide();});$('.site-main-menu').on("click","a",function(e){mobileMenuHide();});})(jQuery);
+(function (a) {
+	'use strict';
+
+	function b() {
+		var d = a('.portfolio-grid'),
+			f = a('.portfolio-filters');
+		d && (d.shuffle({
+			speed: 450,
+			itemSelector: 'figure'
+		}), f.on('click', '.filter', function (g) {
+			d.shuffle('update'), g.preventDefault(), a('.portfolio-filters .filter').parent().removeClass('active'), a(this).parent().addClass('active'), d.shuffle('shuffle', a(this).attr('data-group'))
+		}))
+	}
+
+	function c() {
+		var d = a(window).width(),
+			f = a('#site_header');
+		992 > d ? (f.addClass('mobile-menu-hide'), setTimeout(function () {
+			f.addClass('animate')
+		}, 500)) : f.removeClass('animate')
+	}
+	a(function () {
+		
+	}), a(window).on('load', function () {
+		a('.preloader').fadeOut(800, 'linear');
+		var d = a('.subpages');
+		d[0] && PageTransitions.init({
+			menu: 'ul.site-main-menu'
+		})
+	}).on('resize', function () {
+		c()
+	}), a(document).on('ready', function () {
+		var d = a('.portfolio-grid');
+		d.imagesLoaded(function () {
+			b(this)
+		});
+		var f = a('.blog-masonry');
+		f.imagesLoaded(function () {
+			f.masonry()
+		}), a('.menu-toggle').on('click', function () {
+			a('#site_header').addClass('animate'), a('#site_header').toggleClass('mobile-menu-hide')
+		}), a('.site-main-menu').on('click', 'a', function () {
+			c()
+		}), a('.sidebar-toggle').on('click', function () {
+			a('#blog-sidebar').toggleClass('open')
+		}), a('.testimonials.owl-carousel').owlCarousel({
+			nav: !0,
+			items: 3,
+			loop: !1,
+			navText: !1,
+			margin: 25,
+			responsive: {
+				0: {
+					items: 1
+				},
+				480: {
+					items: 1
+				},
+				768: {
+					items: 2
+				},
+				1200: {
+					items: 2
+				}
+			}
+		}), a('.clients.owl-carousel').imagesLoaded().owlCarousel({
+			nav: !0,
+			items: 2,
+			loop: !1,
+			navText: !1,
+			margin: 10,
+			autoHeight: !1,
+			responsive: {
+				0: {
+					items: 2
+				},
+				768: {
+					items: 4
+				},
+				1200: {
+					items: 6
+				}
+			}
+		}), a('.text-rotation').owlCarousel({
+			loop: !0,
+			dots: !1,
+			nav: !1,
+			margin: 0,
+			items: 1,
+			autoplay: !0,
+			autoplayHoverPause: !1,
+			autoplayTimeout: 3800,
+			animateOut: 'zoomOut',
+			animateIn: 'zoomIn'
+		}), a('.form-control').val('').on('focusin', function () {
+			a(this).parent('.form-group').addClass('form-group-focus')
+		}).on('focusout', function () {
+			0 === a(this).val().length && a(this).parent('.form-group').removeClass('form-group-focus')
+		})
+	})
+})(jQuery);
